@@ -8,6 +8,14 @@
 
   <script type="text/javascript">
 //var x=0;
+//var string="stirng";
+     
+     //si la libreria annyang no se detecta o el buscador no lo soporta
+     if (!annyang) {
+  console.log("Reconocimiento de voz no es soportado");
+}
+     
+     
     if(annyang){
       var comandos = {
         'izquierda': function ()
@@ -25,15 +33,25 @@ alert("abajo");
          'arriba': function ()
         {
 alert("arriba");
+        },
+         'hola *tag': function ()
+        {
+         alert("hola"+tag);
         } 
       };
+       
+       
+//var commandos2 = {'hello :name': helloFunction, 'alummn': helloFunction};       
+//annyang.addCommands(comandos2);
+       
 annyang.addCommands(comandos);
 annyang.setLanguage("es-MX");	
     
-//if(x==0){
+
 annyang.start();
-//x++;
-//}
+
+       
+       
     }
     
   </script>
