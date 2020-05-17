@@ -1,0 +1,30 @@
+<html>
+<head>
+<meta charset=utf-8 />
+<title>reconocer voz</title>
+</head>
+<body>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+
+  <script type="text/javascript">
+var x=0;
+    if(annyang){
+      var comandos = {
+        'hola': function ()
+        {
+alert("hola");
+        } 
+      };
+annyang.addCommands(comandos);
+annyang.setLanguage("es-MX");	
+    
+//if(x==0){
+annyang.start();
+//x++;
+//}
+    }
+    
+  </script>
+
+</body>
+</html>
