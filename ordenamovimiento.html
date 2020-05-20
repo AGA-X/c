@@ -1,0 +1,160 @@
+<html>
+<!-- dices diagonal o aparece y se dibuja el cuadro, si dices izquierda derecha arriba o abajo el cuadro se mueve -->
+<head>
+<meta charset=utf-8 />
+<title>reconocer voz</title>
+</head>
+<body>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+   <canvas id="myCanvas" width="480" height="320"></canvas>
+
+  <script type="text/javascript">
+
+
+var ys=145;
+var dictado="str vacio";
+var t1="El texto capturado fue:";
+var posx=0;
+var posy=0;
+
+//variables para funcion animar
+// obtenemos las dimensiones del canvas
+var width=480;//var width = canvas.width = window.innerWidth;
+var height=320;//var height = canvas.height = window.innerHeight;
+// posiciones
+var x = width;
+var y = 0;
+// velocidad
+var vx = 3;
+var vy = 2;
+
+//api annyang
+    if(annyang){
+      var comandos = {
+ 
+'*tag':function(tag)
+{
+str=tag;
+//ctx.clearRect(0, 0, 480, 320);
+//ctx.fillText(""+tag,50,ys);
+dictado=tag;
+analizaStr();
+
+}
+
+};
+annyang.addCommands(comandos);
+annyang.setLanguage("es-MX");	
+
+annyang.start();
+
+
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
+
+ctx.font = "bold 22px sans-serif";
+
+function drawBall() {
+posx+=2;
+posy+=2;
+    ctx.beginPath();
+    ctx.arc(posx, posy, 10, 0, Math.PI*2);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+}
+
+
+function dibujaString(){
+	ctx.fillText(t1,50,ys-20);
+	ctx.fillText(dictado,50,ys);
+
+}
+
+// animation loop
+            function animar() {
+                // limpia canvas
+                ctx.clearRect(0, 0, width, height);
+                // dibuja un cuadrado de 10x10
+                ctx.fillRect(x, y, 10, 10);
+
+                // actualizamos la posicion
+                //x -= vx;
+                //y += vy;
+		logicaMov();
+
+                // animamos
+                requestAnimationFrame(animar);
+
+                // verificamos que no se salga de rango
+                verifica();
+
+
+		//analizaStr();
+		dibujaString();
+		//drawBall();
+	       }
+
+            animar();//recursar
+
+
+          }
+
+
+function analizaStr(){
+if(dictado=='arriba')
+console.log("analiza "+dictado);
+}
+
+function logicaMov(){
+	if(dictado=='derecha'){
+                x += vx;
+               
+	}else
+if(dictado=='izquierda'){
+                x -= vx;
+	}else
+if(dictado=='arriba'){
+                y-=vy;
+	}else
+if(dictado=='abajo'){
+                y+=vy;
+	}else
+if(dictado=='aparece'){
+x=100;
+y=100;
+}else
+	if(dictado=='diagonal'){
+                x -= vx;
+                y += vy;
+	}
+}
+
+
+
+function verifica(){
+//si va en diagonal cayendo
+//if (y > height || x < 0) {
+//                    x = width;
+//                    y = 0;              }
+//}
+
+if(x<0 && dictado=='izquierda'){
+x=width;
+}
+if(x>width && dictado=='derecha'){
+x=0;
+}
+if(y>height && dictado=='abajo'){
+y=0;
+}
+if(y<0 && dictado=='arriba'){
+y=height;
+}
+}
+    
+  </script>
+
+</body>
+</html>
